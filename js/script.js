@@ -158,3 +158,78 @@ function finalizarCompra() {
         modal.style.display = 'flex';
     }
 }
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Tamanhos
+    const sizeInputs = document.querySelectorAll('input[name="tamanho"]');
+    sizeInputs.forEach(input => {
+        input.addEventListener('click', () => {
+            gtag('event', 'select_size', {
+                'event_category': 'interaction',
+                'event_label': 'tamanhos',
+                'value': input.id
+            });
+        });
+    });
+
+    // Botão de adicionar ao carrinho
+    const cartBtn = document.getElementById('cart-btn');
+    if (cartBtn) {
+        cartBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            gtag('event', 'add_to_cart', {
+                'event_category': 'interaction',
+                'event_label': 'add-carrinho'
+            });
+        });
+    }
+
+    // Botão de salvar nos favoritos
+    const favoriteBtn = document.getElementById('favorite-btn');
+    if (favoriteBtn) {
+        favoriteBtn.addEventListener('click', () => {
+            gtag('event', 'save_favorite', {
+                'event_category': 'interaction',
+                'event_label': 'salvar-fav'
+            });
+        });
+    }
+
+    // Link do WhatsApp
+    const whatsappLink = document.querySelector('.whatsapp-link');
+    if (whatsappLink) {
+        whatsappLink.addEventListener('click', () => {
+            gtag('event', 'whatsapp_share', {
+                'event_category': 'interaction',
+                'event_label': 'whatsapp-link'
+            });
+        });
+    }
+
+    // Benefícios
+    const beneficiosCheckbox = document.getElementById('beneficios');
+    if (beneficiosCheckbox) {
+        beneficiosCheckbox.addEventListener('change', () => {
+            gtag('event', 'toggle_benefits', {
+                'event_category': 'interaction',
+                'event_label': 'beneficios',
+                'value': beneficiosCheckbox.checked ? 'expanded' : 'collapsed'
+            });
+        });
+    }
+
+    // Botão de finalizar compra
+    const finalizarBtn = document.querySelector('.btn-finalizar');
+    if (finalizarBtn) {
+        finalizarBtn.addEventListener('click', () => {
+            gtag('event', 'finalize_purchase', {
+                'event_category': 'interaction',
+                'event_label': 'btn-finalizar'
+            });
+        });
+    }
+});
+
