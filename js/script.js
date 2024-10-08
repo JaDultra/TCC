@@ -130,7 +130,6 @@ function handleCheckoutPage() {
         }
     }
 }
-
 // Função para exibir o alerta customizado
 function showCustomAlert(message) {
     const customAlert = document.getElementById('custom-alert');
