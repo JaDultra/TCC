@@ -865,175 +865,98 @@ hr {
 /* -----------------------------------MEDIA QUERIES--------------------------------------------------- */
 
 /* Para telas pequenas - smartphones */
-@media (max-width: 480px) {
-    /* Topo centralizado e compacto */
-    .topo {
-        flex-direction: column;
+@media (max-width: 828px) {
+    /* Remover ícones de coração, sacola e logo da Nike do menu superior */
+    .icones-top, .logo-nike {
+        display: none;
+    }
+
+    /* Centralizar o conteúdo no topo e no menu */
+    .container, nav, .topo {
         align-items: center;
         justify-content: center;
         text-align: center;
-        padding: 5px;
+        padding: 0 5px;
     }
 
-    /* Ajuste no logo para telas menores */
-    .logo-nike {
-        height: 40px;
-        width: 40px;
-    }
-
-    /* Menu de navegação compacto */
-    nav ul {
-        flex-direction: column;
-        gap: 10px;
-        font-size: 14px;
-    }
-
-    nav {
-        height: auto;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    /* Seções principais centralizadas */
-    .container-centro, main {
-        flex-direction: column;
-        align-items: center;
-        padding: 0 15px;
-    }
-
-    /* Texto adaptado para telas menores */
-    .sessao2 h1 {
-        font-size: 24px;
-    }
-
-    .sessao2 h2 {
-        font-size: 16px;
-    }
-
-    .sessao2 h3 {
+    /* Ajuste nos botões para menor tamanho */
+    .botao h2 {
         font-size: 12px;
+        padding: 8px;
+        width: 140px;
     }
 
-    /* Ajuste das imagens menores para smartphone */
-    .imagens-menores {
-        height: 70px;
-        width: 70px;
-        margin: 15px 0;
+    /* Centralizar e ajustar a grade de números com espaço adicional */
+    .grade-numeros {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* Quatro itens por fileira */
+        gap: 8px; /* Espaço entre os itens */
+        margin: 0 auto 20px; /* Centraliza e adiciona espaço abaixo da grade */
+        width: fit-content; /* Ajusta a largura para o conteúdo */
     }
 
-    /* Botões de tamanho reduzido */
-    .botao h2 {
-        font-size: 16px;
-        width: 100%;
-    }
-
-    /* Checkout - Alinhamento */
-    .produto-carrinho {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .detalhes-produto {
-        text-align: center;
-        font-size: 14px;
-    }
-
-    /* Botões de compra alinhados verticalmente */
-    .botoes {
-        flex-direction: column;
-        gap: 8px;
-    }
-}
-
-/* Telas intermediárias - até tablets (ex: 768px) */
-@media (max-width: 768px) {
-    /* Geralmente, para tablets menores */
-    .container, main, .container-centro {
-        max-width: 100%;
-        padding: 0 20px;
-    }
-
-    .sessao2 h1 {
-        font-size: 28px;
-    }
-
-    .sessao2 h2 {
-        font-size: 18px;
-    }
-
-    .sessao2 h3 {
-        font-size: 14px;
-    }
-
-    /* Menu de navegação reorganizado para tablets */
-    nav ul {
+    /* Espaço entre a grade e os botões */
+    .botao {
+        margin-top: 80px; /* Espaço adicional entre a grade e os botões */
+        justify-content: center;
         gap: 15px;
-        font-size: 16px;
-    }
-
-    /* Ajuste no tamanho das imagens */
-    .imagens-menores {
-        height: 90px;
-        width: 90px;
-    }
-
-    /* Ajuste nos botões */
-    .botao h2 {
-        font-size: 18px;
-    }
-
-    /* Ajuste de layout para seções centrais */
-    .container-centro, .sessao1, .sessao2 {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .container {
-        padding: 0 25px;
-    }
-}
-
-/* Telas maiores - desktops pequenos (ex: 1024px) */
-@media (max-width: 1024px) {
-    .container {
-        max-width: 100%;
-        padding: 0 30px;
-    }
-
-    .sessao2 h1 {
-        font-size: 32px;
-    }
-
-    .sessao2 h2 {
-        font-size: 20px;
-    }
-
-    .sessao2 h3 {
-        font-size: 16px;
-    }
-
-    nav ul {
-        gap: 20px;
-        font-size: 18px;
-    }
-
-    /* Imagens um pouco maiores */
-    .imagens-menores {
-        height: 110px;
-        width: 110px;
     }
 
     .botao h2 {
-        font-size: 20px;
+        font-size: 17px; /* Aumenta o tamanho da fonte */
+        padding: 12px;   /* Aumenta o padding para deixar o botão maior */
+        width: 180px;    /* Ajuste a largura se necessário */
     }
+
 
     .grade-numeros label {
-        width: 65px;
-        height: 45px;
+        text-align: center;
+    }
+
+    /* Centralizar e ajustar imagem grande e imagens menores */
+    .img-maior {
+        width: 85%;
+        margin: 0 auto;
+        display: block;
+    }
+
+    .img-menor {
+        width: 40px;
+        height: 40px;
+        margin: 5px;
+    }
+
+    /* Footer menor e centralizado */
+    footer {
+        font-size: 8px;
+        padding: 8px 0;
+        text-align: center;
+    }
+
+    .end ul {
+        padding: 0;
+        margin: 0;
+        text-align: center;
+    }
+
+    .rodape div {
+        justify-content: center;
+        text-align: center;
+    }
+
+    /* Reduzir o menu do rodapé */
+    .end ul li {
+        margin-top: 3px;
+        font-size: 10px;
+    }
+    
+    /* Ajuste final para reduzir e centralizar os itens */
+    .container-centro {
+        padding: 0;
+        align-items: center;
+        justify-content: center;
     }
 }
-
 
 #custom-alert {
     display: none; /* Oculta o alerta até que seja necessário exibi-lo */
