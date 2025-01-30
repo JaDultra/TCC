@@ -323,6 +323,103 @@ nav ul li:hover::after {
     color: #ff0000;
 }
 
+/* EM BREVE */
+
+
+        .em-breve-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
+            text-align: center;
+            margin: -30px 0px 20px;
+        }
+        .em-breve-container img {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+        .em-breve-container h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .em-breve-container p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .btn-breve {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background: #007bff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+
+
+/* PAG1 */
+
+        .container-pag1 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+            margin-top: -40px;
+        }
+
+        .product-card-pag1 {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .product-card-pag1 a{
+            text-decoration: none;
+        }
+
+        .product-card-pag1:hover {
+            transform: scale(1.02);
+        }
+
+        .product-card-pag1 img {
+            width: 100%;
+            height: auto;
+        }
+
+        .product-info-pag1 {
+            padding: 15px;
+        }
+
+        .product-name-pag1 {
+            font-size: 1rem;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .product-price-pag1 {
+            font-size: 1.2rem;
+            color: #27ae60;
+            margin: 5px 0;
+        }
+
+        .installment-pag1 {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+
+
 
 @keyframes bounce {
     0%, 100% {
