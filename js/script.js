@@ -1,3 +1,10 @@
+// Função para rastrear cliques em categorias (Exemplo: Masculino)
+function trackCategoryClick(category) {
+    gtag('event', 'click', {
+        'event_category': 'Categoria',
+        'event_label': category
+    });
+}
 
 var atualColor = "red"
 
@@ -105,6 +112,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.location.pathname.includes('checkout.html')) {
         handleCheckoutPage();
     }
+
+    // Adiciona rastreamento ao clique no link Masculino
+    const masculinoLink = document.querySelector('a[href="masculine.html"]');
+    if (masculinoLink) {
+        masculinoLink.addEventListener('click', () => {
+            trackCategoryClick('Masculino');
+        });
+    }
 });
 
 // Função para manipular a página de checkout
@@ -130,6 +145,7 @@ function handleCheckoutPage() {
         }
     }
 }
+
 // Função para exibir o alerta customizado
 function showCustomAlert(message) {
     const customAlert = document.getElementById('custom-alert');
@@ -157,9 +173,6 @@ function finalizarCompra() {
         modal.style.display = 'flex';
     }
 }
-
-
-
 
 document.addEventListener('DOMContentLoaded', () => {
     // Tamanhos
@@ -208,6 +221,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Masculino
+    const masculine = document.querySelector('.masculine');
+    if (masculine) {
+        masculine.addEventListener('click', () => {
+            gtag('event', 'masculine', {
+                'event_category': 'interaction',
+                'event_label': 'masculine'
+            });
+        });
+    }
+
     // Benefícios
     const beneficiosCheckbox = document.getElementById('beneficios');
     if (beneficiosCheckbox) {
@@ -235,3 +259,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+function selecionarCor(cor) {
+    localStorage.setItem('corSelecionada', cor); // Salva a cor no localStorage
+    window.location.href = 'index.html'; // Redireciona para a página inicial
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const corSelecionada = localStorage.getItem('corSelecionada');
+    if (corSelecionada) {
+        // Atualizar a imagem principal
+        const imgGrande = document.getElementById('img-grande');
+        if (imgGrande) {
+            imgGrande.src = `assets/${corSelecionada}-1.jpg`;
+        }
+
+        // Atualizar as miniaturas
+        const miniaturas = document.querySelectorAll('.img-menor'); // Seleciona as miniaturas
+        miniaturas.forEach((miniatura, index) => {
+            miniatura.src = `assets/thumbs/${corSelecionada}-${index + 1}.jpg`; // Ajusta os nomes conforme padrão
+        });
+    }
+});
