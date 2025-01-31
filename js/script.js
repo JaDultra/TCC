@@ -114,12 +114,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Adiciona rastreamento ao clique no link Masculino
-    const masculinoLink = document.querySelector('a[href="masculine.html"]');
-    if (masculinoLink) {
-        masculinoLink.addEventListener('click', () => {
-            trackCategoryClick('Masculino');
+    const masculine = document.querySelector('.masculine');
+    if (masculine) {
+        masculine.addEventListener('click', () => {
+            gtag('event', 'masculine', {
+                'event_category': 'interaction',
+                'event_label': 'masculine'
+            });
         });
     }
+
 
     // Adiciona rastreamento ao clique no link Benefícios
     const beneficiosCheckbox = document.getElementById('beneficios');
