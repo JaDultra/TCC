@@ -31,6 +31,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedColor) {
         atualColor = savedColor; // Atualiza a cor com o valor armazenado
         Show('1');  // Atualiza a imagem principal
+
+        // Atualiza as miniaturas com a cor salva
+        const thumbs = document.querySelectorAll('.img-menor');
+        thumbs.forEach((thumb, index) => {
+            thumb.src = `assets/thumbs/${savedColor}-${index + 1}.jpg`;
+        });
     }
 
     // Configura os cliques nas miniaturas para alterar a cor
@@ -103,14 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('selectedSize', selectedSize);
 
             window.location.href = 'checkout.html';
-        });
-    }
-
-    // Fecha o alerta customizado
-    const alertCloseBtn = document.getElementById('alert-close-btn');
-    if (alertCloseBtn) {
-        alertCloseBtn.addEventListener('click', () => {
-            document.getElementById('custom-alert').style.display = 'none';
         });
     }
 
