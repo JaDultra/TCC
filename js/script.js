@@ -1,57 +1,37 @@
-var atualColor = "red"; // Cor padrão inicial
+// Função para rastrear cliques em categorias (Exemplo: Masculino)
+function trackCategoryClick(category) {
+    gtag('event', 'click', {
+        'event_category': 'Categoria',
+        'event_label': category
+    });
+}
 
-// Função para alterar a imagem principal com base na cor
+var atualColor = "red"
+
 function Show(file) {
     var ShowPhoto = document.getElementById('img-grande');
-    newPhoto = "assets/" + atualColor + "-" + file + ".jpg";
-    ShowPhoto.src = newPhoto;
+    newPhoto = "assets/" + atualColor + "-" + file + ".jpg"
+    ShowPhoto.src = newPhoto
 }
 
-// Função para alterar as miniaturas e a cor do tênis
 function Shoes(color) {
-    var tenis = 1;
-    var mudaCor = color;
+    var tenis = 1
+    var mudaCor = color
     while (tenis <= 8) {
-        var thumbs = `/assets/thumbs/${mudaCor}-${tenis}.jpg`;
-        var novaCor = document.getElementById(tenis);
-        novaCor.src = thumbs;
-        tenis++;
+        var thumbs = `/assets/thumbs/${mudaCor}-${tenis}.jpg`
+        var novaCor = document.getElementById(tenis)
+        novaCor.src = thumbs
+        tenis++
     }
-    atualColor = mudaCor;  // Atualiza a cor global
-    Show('1');  // Atualiza a imagem principal
-
-    // Salva a cor no localStorage para persistir entre as páginas
-    localStorage.setItem('selectedColor', mudaCor);
+    atualColor = mudaCor
+    Show('1')
 }
 
-// Função que roda ao carregar a página
 document.addEventListener('DOMContentLoaded', () => {
-    // Recupera a cor salva no localStorage e atualiza a imagem
-    const savedColor = localStorage.getItem('selectedColor');
-    if (savedColor) {
-        atualColor = savedColor; // Atualiza a cor com o valor armazenado
-        Show('1');  // Atualiza a imagem principal
-
-        // Atualiza as miniaturas com a cor salva
-        const thumbs = document.querySelectorAll('.img-menor');
-        thumbs.forEach((thumb, index) => {
-            thumb.src = `assets/thumbs/${savedColor}-${index + 1}.jpg`;
-        });
-    }
-
-    // Configura os cliques nas miniaturas para alterar a cor
-    const colorButtons = document.querySelectorAll('.color-button');
-    colorButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const color = button.dataset.color; // Assume que a cor está no atributo 'data-color'
-            Shoes(color); // Troca a cor e as miniaturas
-        });
-    });
-
-    // Adiciona o comportamento de favoritamento
     const favoriteBtn = document.getElementById('favorite-btn');
     const heartIcon = document.getElementById('heart-icon');
 
+    // Adiciona comportamento ao botão de favoritos
     if (favoriteBtn && heartIcon) {
         favoriteBtn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -73,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Comportamento do carrinho
+    // Adiciona comportamento ao botão do carrinho
     const cartBtn = document.getElementById('cart-btn');
     const cartIcon = document.getElementById('cart-icon');
     const sizeInputs = document.querySelectorAll('input[name="tamanho"]');
@@ -112,12 +92,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Ações no checkout
+    // Fecha o modal quando o botão fechar for clicado
+    const closeModalBtn = document.getElementById("close-modal");
+    if (closeModalBtn) {
+        closeModalBtn.onclick = function() {
+            document.getElementById("modal").style.display = "none";
+        };
+    }
+
+    // Fecha o alerta customizado ao clicar no botão
+    const alertCloseBtn = document.getElementById('alert-close-btn');
+    if (alertCloseBtn) {
+        alertCloseBtn.addEventListener('click', () => {
+            document.getElementById('custom-alert').style.display = 'none';
+        });
+    }
+
+    // Verifica se está na página de checkout e executa apenas se for necessário
     if (window.location.pathname.includes('checkout.html')) {
         handleCheckoutPage();
     }
 
-    // Rastreia o clique na categoria Masculino
+    // Adiciona rastreamento ao clique no link Masculino
     const masculinoLink = document.querySelector('a[href="masculine.html"]');
     if (masculinoLink) {
         masculinoLink.addEventListener('click', () => {
@@ -138,6 +134,7 @@ function handleCheckoutPage() {
         const productSize = document.getElementById('produto-tamanho');
         productSize.textContent = `Tamanho: ${selectedSize}`;
     } else {
+        // Apenas exibe um carrinho vazio sem bloquear a navegação
         const checkoutElement = document.querySelector('.checkout');
         if (checkoutElement) {
             checkoutElement.innerHTML = `
@@ -159,14 +156,6 @@ function showCustomAlert(message) {
     }
 }
 
-// Função para rastrear cliques em categorias
-function trackCategoryClick(category) {
-    gtag('event', 'click', {
-        'event_category': 'Categoria',
-        'event_label': category
-    });
-}
-
 // Função para mostrar confetes
 function showConfetti() {
     confetti({
@@ -185,31 +174,109 @@ function finalizarCompra() {
     }
 }
 
-// Função para fechar a aba no checkout
-document.querySelector('.btn-fechar').addEventListener('click', function() {
-    window.close(); // Tenta fechar a aba
+document.addEventListener('DOMContentLoaded', () => {
+    // Tamanhos
+    const sizeInputs = document.querySelectorAll('input[name="tamanho"]');
+    sizeInputs.forEach(input => {
+        input.addEventListener('click', () => {
+            gtag('event', 'select_size', {
+                'event_category': 'interaction',
+                'event_label': 'tamanhos',
+                'value': input.id
+            });
+        });
+    });
+
+    // Botão de adicionar ao carrinho
+    const cartBtn = document.getElementById('cart-btn');
+    if (cartBtn) {
+        cartBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            gtag('event', 'add_to_cart', {
+                'event_category': 'interaction',
+                'event_label': 'add-carrinho'
+            });
+        });
+    }
+
+    // Botão de salvar nos favoritos
+    const favoriteBtn = document.getElementById('favorite-btn');
+    if (favoriteBtn) {
+        favoriteBtn.addEventListener('click', () => {
+            gtag('event', 'save_favorite', {
+                'event_category': 'interaction',
+                'event_label': 'salvar-fav'
+            });
+        });
+    }
+
+    // Link do WhatsApp
+    const whatsappLink = document.querySelector('.whatsapp-link');
+    if (whatsappLink) {
+        whatsappLink.addEventListener('click', () => {
+            gtag('event', 'whatsapp_share', {
+                'event_category': 'interaction',
+                'event_label': 'whatsapp-link'
+            });
+        });
+    }
+
+    // Masculino
+    const masculine = document.querySelector('.masculine');
+    if (masculine) {
+        masculine.addEventListener('click', () => {
+            gtag('event', 'masculine', {
+                'event_category': 'interaction',
+                'event_label': 'masculine'
+            });
+        });
+    }
+
+    // Benefícios
+    const beneficiosCheckbox = document.getElementById('beneficios');
+    if (beneficiosCheckbox) {
+        beneficiosCheckbox.addEventListener('change', () => {
+            gtag('event', 'toggle_benefits', {
+                'event_category': 'interaction',
+                'event_label': 'beneficios',
+                'value': beneficiosCheckbox.checked ? 'expanded' : 'collapsed'
+            });
+        });
+    }
+
+    // Botão de finalizar compra
+    const finalizarBtn = document.querySelector('.btn-finalizar');
+    if (finalizarBtn) {
+        finalizarBtn.addEventListener('click', () => {
+            gtag('event', 'finalize_purchase', {
+                'event_category': 'interaction',
+                'event_label': 'btn-finalizar'
+            });
+        });
+    }
+        document.querySelector('.btn-fechar').addEventListener('click', function() {
+        window.close(); // Tenta fechar a aba
+    });
 });
 
-// Função para selecionar cor e redirecionar para a página
 function selecionarCor(cor) {
     localStorage.setItem('corSelecionada', cor); // Salva a cor no localStorage
     window.location.href = 'index.html'; // Redireciona para a página inicial
 }
 
-// Função que carrega a cor salva no localStorage
 document.addEventListener('DOMContentLoaded', () => {
     const corSelecionada = localStorage.getItem('corSelecionada');
     if (corSelecionada) {
-        // Atualiza a imagem principal
+        // Atualizar a imagem principal
         const imgGrande = document.getElementById('img-grande');
         if (imgGrande) {
             imgGrande.src = `assets/${corSelecionada}-1.jpg`;
         }
 
-        // Atualiza as miniaturas
-        const miniaturas = document.querySelectorAll('.img-menor');
+        // Atualizar as miniaturas
+        const miniaturas = document.querySelectorAll('.img-menor'); // Seleciona as miniaturas
         miniaturas.forEach((miniatura, index) => {
-            miniatura.src = `assets/thumbs/${corSelecionada}-${index + 1}.jpg`;
+            miniatura.src = `assets/thumbs/${corSelecionada}-${index + 1}.jpg`; // Ajusta os nomes conforme padrão
         });
     }
 });
