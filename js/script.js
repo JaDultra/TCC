@@ -6,25 +6,25 @@ function trackCategoryClick(category) {
     });
 }
 
-var atualColor = "red"
+var atualColor = "red";
 
 function Show(file) {
     var ShowPhoto = document.getElementById('img-grande');
-    newPhoto = "assets/" + atualColor + "-" + file + ".jpg"
-    ShowPhoto.src = newPhoto
+    newPhoto = "assets/" + atualColor + "-" + file + ".jpg";
+    ShowPhoto.src = newPhoto;
 }
 
 function Shoes(color) {
-    var tenis = 1
-    var mudaCor = color
+    var tenis = 1;
+    var mudaCor = color;
     while (tenis <= 8) {
-        var thumbs = `/assets/thumbs/${mudaCor}-${tenis}.jpg`
-        var novaCor = document.getElementById(tenis)
-        novaCor.src = thumbs
-        tenis++
+        var thumbs = `/assets/thumbs/${mudaCor}-${tenis}.jpg`;
+        var novaCor = document.getElementById(tenis);
+        novaCor.src = thumbs;
+        tenis++;
     }
-    atualColor = mudaCor
-    Show('1')
+    atualColor = mudaCor;
+    Show('1');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -120,6 +120,49 @@ document.addEventListener('DOMContentLoaded', () => {
             trackCategoryClick('Masculino');
         });
     }
+
+    // Adiciona rastreamento ao clique no link Benefícios
+    const beneficiosCheckbox = document.getElementById('beneficios');
+    if (beneficiosCheckbox) {
+        beneficiosCheckbox.addEventListener('change', () => {
+            gtag('event', 'toggle_benefits', {
+                'event_category': 'interaction',
+                'event_label': 'beneficios',
+                'value': beneficiosCheckbox.checked ? 'expanded' : 'collapsed'
+            });
+        });
+    }
+
+    // Função para manipular a página de checkout
+    if (window.location.pathname.includes('checkout.html')) {
+        handleCheckoutPage();
+    }
+
+    // Botão de Finalizar Compra
+    const finalizarBtn = document.querySelector('.btn-finalizar');
+    if (finalizarBtn) {
+        finalizarBtn.addEventListener('click', () => {
+            gtag('event', 'finalize_purchase', {
+                'event_category': 'interaction',
+                'event_label': 'btn-finalizar'
+            });
+        });
+    }
+
+    // Botão de fechar aba
+    const closeBtn = document.querySelector('.btn-fechar'); // Seleciona o botão de fechar
+    
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            // Tenta fechar a aba
+            if (window.close) {
+                window.close(); // Funciona para janelas abertas via JavaScript
+            } else {
+                // Se não conseguir fechar, redireciona para uma página de agradecimento ou qualquer outra página
+                window.location.href = 'pagina_de_redirecionamento.html'; // Substitua pelo seu URL desejado
+            }
+        });
+    }
 });
 
 // Função para manipular a página de checkout
@@ -174,91 +217,7 @@ function finalizarCompra() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Tamanhos
-    const sizeInputs = document.querySelectorAll('input[name="tamanho"]');
-    sizeInputs.forEach(input => {
-        input.addEventListener('click', () => {
-            gtag('event', 'select_size', {
-                'event_category': 'interaction',
-                'event_label': 'tamanhos',
-                'value': input.id
-            });
-        });
-    });
-
-    // Botão de adicionar ao carrinho
-    const cartBtn = document.getElementById('cart-btn');
-    if (cartBtn) {
-        cartBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            gtag('event', 'add_to_cart', {
-                'event_category': 'interaction',
-                'event_label': 'add-carrinho'
-            });
-        });
-    }
-
-    // Botão de salvar nos favoritos
-    const favoriteBtn = document.getElementById('favorite-btn');
-    if (favoriteBtn) {
-        favoriteBtn.addEventListener('click', () => {
-            gtag('event', 'save_favorite', {
-                'event_category': 'interaction',
-                'event_label': 'salvar-fav'
-            });
-        });
-    }
-
-    // Link do WhatsApp
-    const whatsappLink = document.querySelector('.whatsapp-link');
-    if (whatsappLink) {
-        whatsappLink.addEventListener('click', () => {
-            gtag('event', 'whatsapp_share', {
-                'event_category': 'interaction',
-                'event_label': 'whatsapp-link'
-            });
-        });
-    }
-
-    // Masculino
-    const masculine = document.querySelector('.masculine');
-    if (masculine) {
-        masculine.addEventListener('click', () => {
-            gtag('event', 'masculine', {
-                'event_category': 'interaction',
-                'event_label': 'masculine'
-            });
-        });
-    }
-
-    // Benefícios
-    const beneficiosCheckbox = document.getElementById('beneficios');
-    if (beneficiosCheckbox) {
-        beneficiosCheckbox.addEventListener('change', () => {
-            gtag('event', 'toggle_benefits', {
-                'event_category': 'interaction',
-                'event_label': 'beneficios',
-                'value': beneficiosCheckbox.checked ? 'expanded' : 'collapsed'
-            });
-        });
-    }
-
-    // Botão de finalizar compra
-    const finalizarBtn = document.querySelector('.btn-finalizar');
-    if (finalizarBtn) {
-        finalizarBtn.addEventListener('click', () => {
-            gtag('event', 'finalize_purchase', {
-                'event_category': 'interaction',
-                'event_label': 'btn-finalizar'
-            });
-        });
-    }
-        document.querySelector('.btn-fechar').addEventListener('click', function() {
-        window.close(); // Tenta fechar a aba
-    });
-});
-
+// Função para salvar a cor selecionada
 function selecionarCor(cor) {
     localStorage.setItem('corSelecionada', cor); // Salva a cor no localStorage
     window.location.href = 'index.html'; // Redireciona para a página inicial
