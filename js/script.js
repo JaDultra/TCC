@@ -6,55 +6,36 @@ function trackCategoryClick(category) {
     });
 }
 
-var atualColor = "red";
-
-function Show(file) {
-    var ShowPhoto = document.getElementById('img-grande');
-    newPhoto = "assets/" + atualColor + "-" + file + ".jpg";
-    ShowPhoto.src = newPhoto;
-}
-
-function Shoes(color) {
-    var tenis = 1;
-    var mudaCor = color;
-    while (tenis <= 8) {
-        var thumbs = `/assets/thumbs/${mudaCor}-${tenis}.jpg`;
-        var novaCor = document.getElementById(tenis);
-        novaCor.src = thumbs;
-        tenis++;
-    }
-    atualColor = mudaCor;
-    Show('1');
-}
-
 document.addEventListener('DOMContentLoaded', () => {
+    // Botão de salvar nos favoritos
     const favoriteBtn = document.getElementById('favorite-btn');
-    const heartIcon = document.getElementById('heart-icon');
+    if (favoriteBtn) {
+        favoriteBtn.addEventListener('click', () => {
+            gtag('event', 'botao_salvar_favorito', {
+                'event_category': 'Interação',
+                'event_label': 'Salvar nos Favoritos'
+            });
+        });
+    }
 
-    // Adiciona comportamento ao botão de favoritos
-    if (favoriteBtn && heartIcon) {
-        favoriteBtn.addEventListener('click', (e) => {
-            e.preventDefault();
+    // Link do WhatsApp
+    const whatsappLink = document.querySelector('.whatsapp-link');
+    if (whatsappLink) {
+        whatsappLink.addEventListener('click', () => {
+            gtag('event', 'compartilhar_whatsapp', {
+                'event_category': 'Interação',
+                'event_label': 'Compartilhar no WhatsApp'
+            });
+        });
+    }
 
-            if (heartIcon.classList.contains('fa-regular')) {
-                heartIcon.classList.remove('fa-regular');
-                heartIcon.classList.add('fa-solid');
-                heartIcon.style.color = '#ff0000';
-            } else {
-                heartIcon.classList.remove('fa-solid');
-                heartIcon.classList.add('fa-regular');
-                heartIcon.style.color = '';
-            }
-
-            heartIcon.classList.add('animate');
-            setTimeout(() => {
-                heartIcon.classList.remove('animate');
-            }, 600);
-
-            // Rastreia o clique no botão de favoritos
-            gtag('event', 'botao_favoritar', {
-                'event_category': 'Favoritos',
-                'event_label': 'Produto'
+    // Botão Masculino
+    const masculine = document.querySelector('.masculine');
+    if (masculine) {
+        masculine.addEventListener('click', () => {
+            gtag('event', 'botao_masculino', {
+                'event_category': 'Categoria',
+                'event_label': 'Masculino'
             });
         });
     }
@@ -104,27 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Fecha o modal quando o botão fechar for clicado
-    const closeModalBtn = document.getElementById("close-modal");
-    if (closeModalBtn) {
-        closeModalBtn.onclick = function() {
-            document.getElementById("modal").style.display = "none";
-        };
-    }
-
-    // Fecha o alerta customizado ao clicar no botão
-    const alertCloseBtn = document.getElementById('alert-close-btn');
-    if (alertCloseBtn) {
-        alertCloseBtn.addEventListener('click', () => {
-            document.getElementById('custom-alert').style.display = 'none';
-        });
-    }
-
-    // Verifica se está na página de checkout e executa apenas se for necessário
-    if (window.location.pathname.includes('checkout.html')) {
-        handleCheckoutPage();
-    }
-
     // Adiciona rastreamento ao clique no link Masculino
     const masculinoLink = document.querySelector('a[href="masculine.html"]');
     if (masculinoLink) {
@@ -161,29 +121,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    document.querySelector('.btn-fechar').addEventListener('click', function() {
-        window.close(); // Tenta fechar a aba
-    });
-});
-
-function selecionarCor(cor) {
-    localStorage.setItem('corSelecionada', cor); // Salva a cor no localStorage
-    window.location.href = 'index.html'; // Redireciona para a página inicial
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    const corSelecionada = localStorage.getItem('corSelecionada');
-    if (corSelecionada) {
-        // Atualizar a imagem principal
-        const imgGrande = document.getElementById('img-grande');
-        if (imgGrande) {
-            imgGrande.src = `assets/${corSelecionada}-1.jpg`;
-        }
-
-        // Atualizar as miniaturas
-        const miniaturas = document.querySelectorAll('.img-menor'); // Seleciona as miniaturas
-        miniaturas.forEach((miniatura, index) => {
-            miniatura.src = `assets/thumbs/${corSelecionada}-${index + 1}.jpg`; // Ajusta os nomes conforme padrão
+    // Fecha o alerta customizado ao clicar no botão
+    const alertCloseBtn = document.getElementById('alert-close-btn');
+    if (alertCloseBtn) {
+        alertCloseBtn.addEventListener('click', () => {
+            document.getElementById('custom-alert').style.display = 'none';
         });
     }
 });
