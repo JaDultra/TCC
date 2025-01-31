@@ -112,15 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.location.pathname.includes('checkout.html')) {
         handleCheckoutPage();
     }
-
-    // Adiciona rastreamento ao clique no link Masculino
-    const masculinoLink = document.querySelector('a[href="masculine.html"]');
-    if (masculinoLink) {
-        masculinoLink.addEventListener('click', () => {
-            trackCategoryClick('Masculino');
-        });
-    }
 });
+
 
 // Função para manipular a página de checkout
 function handleCheckoutPage() {
@@ -179,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sizeInputs = document.querySelectorAll('input[name="tamanho"]');
     sizeInputs.forEach(input => {
         input.addEventListener('click', () => {
-            gtag('event', 'select_size', {
+            gtag('event', 'seleciona-tamanho', {
                 'event_category': 'interaction',
                 'event_label': 'tamanhos',
                 'value': input.id
@@ -192,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cartBtn) {
         cartBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            gtag('event', 'add_to_cart', {
+            gtag('event', 'adicionar__carrinho', {
                 'event_category': 'interaction',
                 'event_label': 'add-carrinho'
             });
@@ -203,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const favoriteBtn = document.getElementById('favorite-btn');
     if (favoriteBtn) {
         favoriteBtn.addEventListener('click', () => {
-            gtag('event', 'save_favorite', {
+            gtag('event', 'salvar_favorito', {
                 'event_category': 'interaction',
                 'event_label': 'salvar-fav'
             });
@@ -213,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const masculine = document.querySelector('.masculine');
     if (masculine) {
         masculine.addEventListener('click', () => {
-            gtag('event', 'masculine', {
+            gtag('event', 'aba-masculino', {
                 'event_category': 'interaction',
                 'event_label': 'masculine'
             });
@@ -226,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const whatsappLink = document.querySelector('.whatsapp-link');
     if (whatsappLink) {
         whatsappLink.addEventListener('click', () => {
-            gtag('event', 'whatsapp_share', {
+            gtag('event', 'link-whatsapp', {
                 'event_category': 'interaction',
                 'event_label': 'whatsapp-link'
             });
@@ -237,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const beneficiosCheckbox = document.getElementById('beneficios');
     if (beneficiosCheckbox) {
         beneficiosCheckbox.addEventListener('change', () => {
-            gtag('event', 'toggle_benefits', {
+            gtag('event', 'beneficios', {
                 'event_category': 'interaction',
                 'event_label': 'beneficios',
                 'value': beneficiosCheckbox.checked ? 'expanded' : 'collapsed'
@@ -249,7 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const finalizarBtn = document.querySelector('.btn-finalizar');
     if (finalizarBtn) {
         finalizarBtn.addEventListener('click', () => {
-            gtag('event', 'finalize_purchase', {
+            gtag('event', 'finalizar-compra', {
                 'event_category': 'interaction',
                 'event_label': 'btn-finalizar'
             });
