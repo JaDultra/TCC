@@ -1,6 +1,6 @@
 // Função para rastrear cliques em categorias (Exemplo: Masculino)
 function trackCategoryClick(category) {
-    gtag('event', 'click', {
+    gtag('event', 'clique_categoria', {
         'event_category': 'Categoria',
         'event_label': category
     });
@@ -50,6 +50,12 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 heartIcon.classList.remove('animate');
             }, 600);
+
+            // Rastreia o clique no botão de favoritos
+            gtag('event', 'botao_favoritar', {
+                'event_category': 'Favoritos',
+                'event_label': 'Produto'
+            });
         });
     }
 
@@ -88,6 +94,12 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('selectedColor', selectedColor);
             localStorage.setItem('selectedSize', selectedSize);
 
+            // Rastreia o clique no botão de adicionar ao carrinho
+            gtag('event', 'botao_adicionar_ao_carrinho', {
+                'event_category': 'Carrinho',
+                'event_label': 'Adicionar Produto'
+            });
+
             window.location.href = 'checkout.html';
         });
     }
@@ -114,114 +126,46 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Adiciona rastreamento ao clique no link Masculino
-    const masculine = document.querySelector('.masculine');
-    if (masculine) {
-        masculine.addEventListener('click', () => {
-            gtag('event', 'masculine', {
-                'event_category': 'interaction',
-                'event_label': 'masculine'
+    const masculinoLink = document.querySelector('a[href="masculine.html"]');
+    if (masculinoLink) {
+        masculinoLink.addEventListener('click', () => {
+            trackCategoryClick('Masculino');
+            // Rastreia o clique no link Masculino
+            gtag('event', 'botao_masculino', {
+                'event_category': 'Categoria',
+                'event_label': 'Masculino'
             });
         });
     }
 
-
-    // Adiciona rastreamento ao clique no link Benefícios
+    // Adiciona rastreamento ao clique no botão de benefícios
     const beneficiosCheckbox = document.getElementById('beneficios');
     if (beneficiosCheckbox) {
         beneficiosCheckbox.addEventListener('change', () => {
-            gtag('event', 'toggle_benefits', {
-                'event_category': 'interaction',
-                'event_label': 'beneficios',
-                'value': beneficiosCheckbox.checked ? 'expanded' : 'collapsed'
+            gtag('event', 'botao_beneficios', {
+                'event_category': 'Interação',
+                'event_label': 'Benefícios',
+                'value': beneficiosCheckbox.checked ? 'expandido' : 'recolhido'
             });
         });
     }
 
-    // Função para manipular a página de checkout
-    if (window.location.pathname.includes('checkout.html')) {
-        handleCheckoutPage();
-    }
-
-    // Botão de Finalizar Compra
+    // Botão de finalizar compra
     const finalizarBtn = document.querySelector('.btn-finalizar');
     if (finalizarBtn) {
         finalizarBtn.addEventListener('click', () => {
-            gtag('event', 'finalize_purchase', {
-                'event_category': 'interaction',
-                'event_label': 'btn-finalizar'
+            gtag('event', 'botao_finalizar_compra', {
+                'event_category': 'Carrinho',
+                'event_label': 'Finalizar Compra'
             });
         });
     }
 
-    // Botão de fechar aba
-    const closeBtn = document.querySelector('.btn-fechar'); // Seleciona o botão de fechar
-    
-    if (closeBtn) {
-        closeBtn.addEventListener('click', function() {
-            // Tenta fechar a aba
-            if (window.close) {
-                window.close(); // Funciona para janelas abertas via JavaScript
-            } else {
-                // Se não conseguir fechar, redireciona para uma página de agradecimento ou qualquer outra página
-                window.location.href = 'pagina_de_redirecionamento.html'; // Substitua pelo seu URL desejado
-            }
-        });
-    }
+    document.querySelector('.btn-fechar').addEventListener('click', function() {
+        window.close(); // Tenta fechar a aba
+    });
 });
 
-// Função para manipular a página de checkout
-function handleCheckoutPage() {
-    const selectedColor = localStorage.getItem('selectedColor');
-    const selectedSize = localStorage.getItem('selectedSize');
-
-    if (selectedColor && selectedSize) {
-        const productImage = document.getElementById('produto-carrinho-img');
-        productImage.src = `assets/${selectedColor}-1.jpg`;
-
-        const productSize = document.getElementById('produto-tamanho');
-        productSize.textContent = `Tamanho: ${selectedSize}`;
-    } else {
-        // Apenas exibe um carrinho vazio sem bloquear a navegação
-        const checkoutElement = document.querySelector('.checkout');
-        if (checkoutElement) {
-            checkoutElement.innerHTML = `
-                <h2>Seu carrinho está vazio</h2>
-                <p>Adicione produtos ao carrinho para visualizar nesta página.</p>
-                <a href="index.html" class="btn-voltar">Voltar às Compras</a>
-            `;
-        }
-    }
-}
-
-// Função para exibir o alerta customizado
-function showCustomAlert(message) {
-    const customAlert = document.getElementById('custom-alert');
-    if (customAlert) {
-        const alertMessage = document.querySelector('.custom-alert-content p');
-        alertMessage.textContent = message;
-        customAlert.style.display = 'flex';
-    }
-}
-
-// Função para mostrar confetes
-function showConfetti() {
-    confetti({
-        particleCount: 200,
-        spread: 70,
-        origin: { y: 0.6 }
-    });
-}
-
-// Função para finalizar a compra
-function finalizarCompra() {
-    showConfetti();
-    const modal = document.getElementById('modal');
-    if (modal) {
-        modal.style.display = 'flex';
-    }
-}
-
-// Função para salvar a cor selecionada
 function selecionarCor(cor) {
     localStorage.setItem('corSelecionada', cor); // Salva a cor no localStorage
     window.location.href = 'index.html'; // Redireciona para a página inicial
