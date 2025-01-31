@@ -58,22 +58,23 @@ function trackFinalizePurchase() {
 // Função para mostrar a imagem principal
 function Show(file) {
     var ShowPhoto = document.getElementById('img-grande');
-    newPhoto = "assets/" + atualColor + "-" + file + ".jpg"
-    ShowPhoto.src = newPhoto
+    newPhoto = `assets/${atualColor}-${file}.jpg`; // Usa a cor selecionada
+    ShowPhoto.src = newPhoto;
 }
 
 // Função para mudar a cor do tênis
 function Shoes(color) {
-    var tenis = 1
-    var mudaCor = color
+    var tenis = 1;
+    var mudaCor = color;
     while (tenis <= 8) {
-        var thumbs = `/assets/thumbs/${mudaCor}-${tenis}.jpg`
-        var novaCor = document.getElementById(tenis)
-        novaCor.src = thumbs
-        tenis++
+        var thumbs = `/assets/thumbs/${mudaCor}-${tenis}.jpg`;
+        var novaCor = document.getElementById(tenis);
+        novaCor.src = thumbs;
+        tenis++;
     }
-    atualColor = mudaCor
-    Show('1')
+    atualColor = mudaCor;
+    localStorage.setItem('selectedColor', mudaCor); // Salva a cor no localStorage
+    Show('1');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -169,6 +170,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.btn-fechar').addEventListener('click', function() {
         window.close();
     });
+
+    // Verifica se há uma cor de tênis salva no localStorage e atualiza a imagem
+    const savedColor = localStorage.getItem('selectedColor');
+    if (savedColor) {
+        atualColor = savedColor;
+        Show('1'); // Atualiza a imagem do tênis
+    }
 });
 
 // Função para exibir o alerta customizado
