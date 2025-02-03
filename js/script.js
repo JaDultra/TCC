@@ -248,9 +248,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
-        document.querySelector('.btn-fechar').addEventListener('click', function() {
-        window.close(); // Tenta fechar a aba
-    });
 });
 
 function selecionarCor(cor) {
